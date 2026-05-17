@@ -26,6 +26,44 @@
   justify-content: space-between;
   align-items: center;
   height: 70px;
+  width: 100%;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+  gap: 5px;
+  z-index: 101;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 2px;
+  transition: all 0.3s ease;
+  display: block;
+}
+
+.navbar.dark-bg .hamburger span {
+  background-color: white;
+}
+
+.navbar.light-bg .hamburger span {
+  background-color: #333;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translateY(12px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translateY(-10px);
 }
 
 .navbar-title {
@@ -34,6 +72,14 @@
   letter-spacing: 2px;
   font-family: 'Courier New', monospace;
   transition: color 0.3s ease;
+}
+
+.title-desktop {
+  display: inline;
+}
+
+.title-mobile {
+  display: none;
 }
 
 .navbar.dark-bg .navbar-title {
@@ -47,7 +93,9 @@
 .navbar-menu {
   display: flex;
   list-style: none;
-  gap: 40px;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .navbar-link {
@@ -80,22 +128,84 @@
 }
 
 @media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
   .navbar-container {
-    flex-direction: column;
-    height: auto;
     padding: 15px 20px;
-    gap: 15px;
+    height: 70px;
+    justify-content: center;
   }
 
   .navbar-title {
     font-size: 20px;
+    text-align: center;
+    flex: 1;
+  }
+
+  .title-desktop {
+    display: none;
+  }
+
+  .title-mobile {
+    display: inline;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+
+  .hamburger {
+    position: absolute;
+    right: 20px;
   }
 
   .navbar-menu {
-    gap: 20px;
+    position: fixed;
+    top: 70px;
+    right: -100%;
+    height: calc(100vh - 70px);
+    width: 80%;
+    max-width: 300px;
+    background-color: #f9f9f9;
+    flex-direction: column;
+    gap: 0;
+    overflow-y: auto;
+    transition: right 0.3s ease;
+    z-index: 99;
+    padding: 20px 0;
+    display: flex;
+    list-style: none;
+    margin: 0;
+    align-items: flex-start;
   }
 
-  .navbar-link {
+  .navbar-menu.open {
+    right: 0;
+  }
+
+  .navbar-menu li {
+    width: 100%;
+    text-align: left;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .navbar-menu li:last-child {
+    border-bottom: none;
+  }
+
+  .navbar-menu .navbar-link {
     font-size: 14px;
+    display: block;
+    width: 100%;
+    color: #333 !important;
+  }
+
+  .navbar-menu .navbar-link:hover,
+  .navbar-menu .navbar-link.active {
+    color: #d4a574 !important;
   }
 }
