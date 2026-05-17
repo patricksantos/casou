@@ -5,6 +5,7 @@ import CountdownSection from './components/CountdownSection'
 import CerimonySection from './components/CerimonySection'
 import GiftRegistry from './components/GiftRegistry'
 import Navigation from './components/Navigation'
+import Footer from './components/Footer'
 import './App.css'
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
           <CerimonySection />
         </section>
       </main>
+      <Footer />
     </div>
   )
 }
