@@ -1,0 +1,93 @@
+.pre-wedding-container {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.section-title {
+  font-size: 42px;
+  font-weight: 300;
+  text-align: center;
+  color: #333;
+  letter-spacing: 1px;
+}
+
+.section-subtitle {
+  font-size: 18px;
+  text-align: center;
+  color: #999;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+
+.banner-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.banner-card {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.photo-placeholder {
+  width: 100%;
+  height: 240px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.photo-number {
+  font-size: 64px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.photo-title {
+  padding: 15px;
+  text-align: center;
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 32px;
+  }
+
+  .section-subtitle {
+    font-size: 16px;
+  }
+
+  .banner-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .banner-card {
+    height: 250px;
+  }
+
+  .photo-number {
+    font-size: 48px;
+  }
+}

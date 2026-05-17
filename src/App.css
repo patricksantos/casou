@@ -1,0 +1,42 @@
+.app {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  margin-top: 70px;
+}
+
+.hero-section {
+  width: 100%;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -70px;
+}
+
+.section {
+  width: 100%;
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section:nth-child(odd) {
+  background: #fff;
+}
+
+.section:nth-child(even) {
+  background: #f9f9f9;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 40px 15px;
+  }
+}
