@@ -95,18 +95,23 @@
   color: white;
   border: none;
   padding: 12px 20px;
-  margin: 15px 15px 15px 15px;
+  margin: 15px auto 20px auto;
   border-radius: 6px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   text-transform: capitalize;
+  display: inline-block;
 }
 
 .gift-button:hover {
   background: #c9956b;
   transform: scale(1.02);
+}
+
+.gift-button:active {
+  transform: scale(0.98);
 }
 
 @media (max-width: 768px) {
@@ -130,6 +135,10 @@
   .gift-price {
     font-size: 16px;
   }
+
+  .gift-card {
+    padding: 18px 12px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -144,75 +153,13 @@
   .section-subtitle {
     font-size: 14px;
   }
-}
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  width: fit-content;
-}
 
-.gift-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid #eee;
-}
-
-.gift-price {
-  font-size: 18px;
-  font-weight: 600;
-  color: #d4a574;
-}
-
-.gift-button {
-  background: #d4a574;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  transition: all 0.3s ease;
-}
-
-.gift-button:hover {
-  background: #b8915f;
-  transform: scale(1.05);
-}
-
-.gift-button:active {
-  transform: scale(0.98);
-}
-
-@media (max-width: 768px) {
-  .gifts-grid {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
-  }
-
-  .gift-card {
-    padding: 20px;
-  }
-
-  .gift-title {
-    font-size: 16px;
-  }
-
-  .gift-description {
-    font-size: 13px;
-  }
-
-  .gift-footer {
-    flex-direction: column;
-    gap: 12px;
-    align-items: flex-start;
-  }
-
+  /* Garantir botão centralizado e com margem adequada no mobile */
   .gift-button {
-    width: 100%;
+    display: block;
+    width: calc(100% - 40px);
+    max-width: 360px;
+    margin: 12px auto 20px auto;
     text-align: center;
   }
 }

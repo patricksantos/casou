@@ -1,139 +1,155 @@
 .loading-screen {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: #f9f9f9;
+  inset: 0;
+  background: #f9f9f9;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   z-index: 9999;
-  animation: fadeOutScreen 0.5s ease-in-out 2s forwards;
 }
 
-@keyframes fadeOutScreen {
-  from {
-    opacity: 1;
-    visibility: visible;
-  }
-  to {
-    opacity: 0;
-    visibility: hidden;
-  }
+/* Fade-out for smooth transition to site */
+@keyframes loadingFadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-6px); }
+}
+
+.loading-screen.fade-out {
+  animation: loadingFadeOut 0.6s ease-in forwards;
 }
 
 .loading-content {
-  text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 20px;
   align-items: center;
-  animation: fadeInContent 1.5s ease-in-out;
+  gap: 30px;
+  text-align: center;
 }
 
-@keyframes fadeInContent {
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.loading-frame {
+.loading-initials-frame {
   position: relative;
-  width: 200px;
-  height: 200px;
+  width: 120px;
+  height: 120px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  border: 2px solid #d4a574;
+  background: rgba(212, 165, 116, 0.03);
+  backdrop-filter: blur(5px);
+}
+
+.loading-frame-corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
   border: 2px solid #d4a574;
 }
 
-.loading-frame::before {
-  content: '';
-  position: absolute;
-  top: -15px;
-  left: -15px;
-  width: 30px;
-  height: 30px;
-  border-top: 2px solid #d4a574;
-  border-left: 2px solid #d4a574;
+.loading-frame-corner.top-left {
+  top: -8px;
+  left: -8px;
+  border-right: none;
+  border-bottom: none;
 }
 
-.loading-frame::after {
-  content: '';
-  position: absolute;
-  bottom: -15px;
-  right: -15px;
-  width: 30px;
-  height: 30px;
-  border-bottom: 2px solid #d4a574;
-  border-right: 2px solid #d4a574;
+.loading-frame-corner.top-right {
+  top: -8px;
+  right: -8px;
+  border-left: none;
+  border-bottom: none;
+}
+
+.loading-frame-corner.bottom-left {
+  bottom: -8px;
+  left: -8px;
+  border-right: none;
+  border-top: none;
+}
+
+.loading-frame-corner.bottom-right {
+  bottom: -8px;
+  right: -8px;
+  border-left: none;
+  border-top: none;
 }
 
 .loading-initials {
-  font-size: 80px;
+  font-size: 48px;
   font-weight: 300;
-  letter-spacing: 6px;
+  letter-spacing: 4px;
   color: #d4a574;
   margin: 0;
   font-family: 'Courier New', monospace;
 }
 
-.loading-title {
-  font-size: 42px;
+.loading-names {
+  font-size: 56px;
   font-weight: 300;
   letter-spacing: 2px;
-  color: #333;
-  margin: 20px 0 0 0;
+  color: #d4a574;
+  margin: 0;
+  text-transform: uppercase;
 }
 
 .loading-date {
-  font-size: 16px;
-  color: #999;
-  letter-spacing: 1px;
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: 3px;
+  color: #d4a574;
   margin: 0;
+}
+
+/* Fade-in animations (staggered) */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.loading-initials-frame {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease-out 0.15s forwards;
+}
+
+.loading-names {
+  opacity: 0;
+  animation: fadeInUp 0.7s ease-out 0.35s forwards;
+}
+
+.loading-date {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease-out 0.6s forwards;
 }
 
 @media (max-width: 768px) {
   .loading-content {
-    gap: 15px;
+    gap: 18px;
   }
 
-  .loading-frame {
-    width: 140px;
-    height: 140px;
-  }
-
-  .loading-frame::before {
-    top: -12px;
-    left: -12px;
-    width: 24px;
-    height: 24px;
-  }
-
-  .loading-frame::after {
-    bottom: -12px;
-    right: -12px;
-    width: 24px;
-    height: 24px;
+  .loading-initials-frame {
+    width: 100px;
+    height: 100px;
   }
 
   .loading-initials {
-    font-size: 56px;
-    letter-spacing: 4px;
+    font-size: 40px;
+    letter-spacing: 3px;
   }
 
-  .loading-title {
-    font-size: 28px;
+  .loading-names {
+    font-size: 40px;
   }
 
   .loading-date {
-    font-size: 13px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .loading-names {
+    font-size: 32px;
+  }
+
+  .loading-initials {
+    font-size: 34px;
   }
 }
