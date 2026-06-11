@@ -3,6 +3,7 @@ import HeroBanner from './components/HeroBanner'
 import WelcomeSection from './components/WelcomeSection'
 import CountdownSection from './components/CountdownSection'
 import CerimonySection from './components/CerimonySection'
+import RSVPSection from './components/RSVPSection'
 import GiftRegistry from './components/GiftRegistry'
 import Navigation from './components/Navigation'
 import Footer from './components/Footer'
@@ -33,6 +34,9 @@ function App() {
         </section>
         <section id="gifts" className="section">
           <GiftRegistry />
+        </section>
+        <section id="rsvp" className="section">
+          <RSVPSection />
         </section>
         <section id="ceremony" className="section">
           <CerimonySection />

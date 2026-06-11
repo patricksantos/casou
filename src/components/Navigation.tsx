@@ -54,6 +54,7 @@ export default function Navigation({ activeSection, setActiveSection }: Navigati
     { id: 'countdown', label: 'CONTAGEM' },
     { id: 'welcome', label: 'O CASAL' },
     { id: 'gifts', label: 'PRESENTES' },
+    { id: 'rsvp', label: 'CONFIRMAR PRESENÇA' },
     { id: 'ceremony', label: 'CERIMÔNIA' },
   ]
 

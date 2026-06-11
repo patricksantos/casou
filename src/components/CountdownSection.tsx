@@ -40,7 +40,7 @@ export default function CountdownSection() {
 
   return (
     <div className="countdown-container">
-      <h2 className="section-title">Contagem Regressiva</h2>
+      <h2 className="countdown-title">Contagem Regressiva</h2>
       
       <div className="countdown-grid">
         <div className="countdown-card">

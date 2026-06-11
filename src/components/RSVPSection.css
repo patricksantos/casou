@@ -1,0 +1,104 @@
+.rsvp-section {
+  width: 100%;
+  padding: 60px 30px;
+}
+
+.rsvp-section--submitted {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+.rsvp-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  align-items: center;
+}
+
+.rsvp-title {
+  font-size: 36px;
+  color: #333;
+  font-weight: 300;
+  letter-spacing: 1px;
+  text-align: center;
+  margin: 0;
+}
+
+.rsvp-text {
+  font-size: 16px;
+  color: #333;
+  font-weight: 300;
+  line-height: 1.8;
+  letter-spacing: 0.5px;
+  text-align: center;
+  max-width: 800px;
+  margin: 0;
+}
+
+.rsvp-gifts-link {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-top: 10px;
+  font: inherit;
+  color: #d4a574;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.rsvp-form {
+  width: 100%;
+  max-width: 800px;
+  height: 800px;
+  border: none;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .rsvp-section {
+    padding: 40px 20px;
+  }
+
+  .rsvp-title {
+    font-size: 28px;
+  }
+
+  .rsvp-text {
+    font-size: 14px;
+  }
+
+  .rsvp-form {
+    height: 950px;
+  }
+
+  .rsvp-section--submitted {
+    min-height: 475px;
+  }
+}
+
+@media (max-width: 480px) {
+  .rsvp-section {
+    padding: 30px 15px;
+  }
+
+  .rsvp-title {
+    font-size: 24px;
+  }
+
+  .rsvp-text {
+    font-size: 13px;
+  }
+
+  .rsvp-form {
+    height: 1050px;
+  }
+
+  .rsvp-section--submitted {
+    min-height: 525px;
+  }
+}
