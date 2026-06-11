@@ -182,8 +182,7 @@
     font-size: 36px;
     letter-spacing: 3px;
   }
-
-
+}
 
 @media (max-width: 480px) {
   .hero-names {
@@ -203,37 +202,5 @@
 
   .initials {
     font-size: 28px;
-  }
-}
-
-.scroll-down-button {
-  position: absolute;
-  bottom: 50px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.arrow-down {
-  font-size: 32px;
-  color: white;
-  display: block;
-  animation: bounce 2s infinite;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(10px);
   }
 }

@@ -11,17 +11,18 @@ export default function WelcomeSection() {
   ]
 
   return (
-    <section id="welcome" className="welcome-section">
+    <div className="welcome-section">
       <div className="welcome-container">
         <div className="welcome-content">
           <h2 className="welcome-title">O Casal</h2>
           <div className="gallery-grid">
             {photos.map((photo, index) => (
-              <img 
-                key={index} 
-                src={photo} 
+              <img
+                key={index}
+                src={photo}
                 alt={`Foto ${index + 1}`}
                 className="gallery-image"
+                loading="lazy"
               />
             ))}
           </div>
@@ -39,6 +40,6 @@ export default function WelcomeSection() {
           </p>
         </div>
       </div>
-    </section>
+    </div>
   )
 }

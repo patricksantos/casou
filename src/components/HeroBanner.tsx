@@ -15,10 +15,6 @@ export default function HeroBanner() {
     return () => clearInterval(timer)
   }, [])
 
-  const goToPhoto = (index: number) => {
-    setCurrentPhotoIndex(index)
-  }
-
   return (
     <div className="hero-banner">
       <div className="hero-images-container">

@@ -2,7 +2,7 @@ import './CerimonySection.css'
 
 export default function CerimonySection() {
   return (
-    <section id="ceremony" className="ceremony-section">
+    <div className="ceremony-section">
       <div className="ceremony-container">
         <h2 className="ceremony-title">Cerimônia</h2>
         
@@ -27,6 +27,6 @@ export default function CerimonySection() {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   )
 }
