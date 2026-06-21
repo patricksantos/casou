@@ -3,22 +3,18 @@ import { useCart } from '../context/CartContext'
 import { gifts } from '../data/gifts'
 import './Cart.css'
 
-// ⚠️ Substitua pelo seu número de WhatsApp (código do país + DDD + número, sem espaços ou símbolos)
-// Exemplo: '5511987654321'
-const WHATSAPP_NUMBER = '5511999999999'
-
 type PaymentMethod = 'pix' | 'link'
 
 export default function Cart() {
   const { items, removeItem, clearCart, total, count, cartOpen, openCart, closeCart } = useCart()
 
   const [showCheckout, setShowCheckout] = useState(false)
-  const [confirmed, setConfirmed] = useState(false)
-
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [payment, setPayment] = useState<PaymentMethod>('pix')
   const [errors, setErrors] = useState<{ name?: string; phone?: string }>({})
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
 
   const maskPhone = (value: string) => {
     const digits = value.replace(/\D/g, '').slice(0, 11)
@@ -30,56 +26,59 @@ export default function Cart() {
 
   const cartGifts = items.map((id) => gifts.find((g) => g.id === id)!).filter(Boolean)
 
-  const closeDrawer = () => {
-    closeCart()
-  }
-
   const validate = () => {
     const newErrors: { name?: string; phone?: string } = {}
     if (name.trim().length < 2)
       newErrors.name = 'Informe seu nome completo.'
-    const digits = phone.replace(/\D/g, '')
-    if (digits.length < 10)
+    if (phone.replace(/\D/g, '').length < 10)
       newErrors.phone = 'Informe um telefone válido com DDD.'
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!validate()) return
 
-    const paymentLabel = payment === 'pix' ? 'PIX' : 'Link de pagamento'
-    const giftsList = cartGifts
-      .map((g) => `• ${g.title} — R$ ${g.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`)
-      .join('\n')
+    setSubmitting(true)
+    setSubmitError('')
 
-    const msg = [
-      '🎁 *Novo pedido de presente!*',
-      '',
-      `*Nome:* ${name}`,
-      `*Telefone:* ${phone}`,
-      `*Pagamento preferido:* ${paymentLabel}`,
-      '',
-      '*Presentes escolhidos:*',
-      giftsList,
-      '',
-      `*Total:* R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`,
-    ].join('\n')
+    try {
+      const res = await fetch('/api/criar-pagamento', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: cartGifts.map((g) => ({ id: g.id, title: g.title, price: g.price })),
+          payer: { name, phone, payment },
+          origin: window.location.origin,
+        }),
+      })
 
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank')
-    setConfirmed(true)
-    clearCart()
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        throw new Error(data.error || 'Erro ao processar pagamento.')
+      }
+
+      const data = await res.json()
+      localStorage.setItem(
+        'wedding_last_order',
+        JSON.stringify({ giftIds: cartGifts.map((g) => g.id), name })
+      )
+      clearCart()
+      window.location.href = data.checkout_url
+    } catch (err: unknown) {
+      setSubmitError(err instanceof Error ? err.message : 'Erro ao processar pagamento. Tente novamente.')
+      setSubmitting(false)
+    }
   }
 
-  const resetAll = () => {
-    closeCart()
+  const resetCheckout = () => {
     setShowCheckout(false)
-    setConfirmed(false)
     setName('')
     setPhone('')
     setPayment('pix')
     setErrors({})
+    setSubmitError('')
   }
 
   return (
@@ -95,12 +94,12 @@ export default function Cart() {
         </button>
       )}
 
-      {cartOpen && <div className="cart-backdrop" onClick={closeDrawer} />}
+      {cartOpen && <div className="cart-backdrop" onClick={() => closeCart()} />}
 
       <div className={`cart-drawer ${cartOpen ? 'open' : ''}`}>
         <div className="cart-drawer-header">
           <h3>Meu Carrinho</h3>
-          <button className="cart-drawer-close" onClick={closeDrawer}>✕</button>
+          <button className="cart-drawer-close" onClick={() => closeCart()}>✕</button>
         </div>
 
         {cartGifts.length === 0 ? (
@@ -120,13 +119,7 @@ export default function Cart() {
                       R$ {gift.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                     </p>
                   </div>
-                  <button
-                    className="cart-item-remove"
-                    onClick={() => removeItem(gift.id)}
-                    aria-label="Remover presente"
-                  >
-                    ✕
-                  </button>
+                  <button className="cart-item-remove" onClick={() => removeItem(gift.id)} aria-label="Remover">✕</button>
                 </div>
               ))}
             </div>
@@ -150,98 +143,73 @@ export default function Cart() {
       {showCheckout && (
         <div className="checkout-overlay">
           <div className="checkout-modal">
-            {confirmed ? (
-              <div className="checkout-confirmed">
-                <div className="checkout-confirmed-icon">✓</div>
-                <h3>Pedido enviado!</h3>
-                <p>
-                  Em breve você receberá o{' '}
-                  {payment === 'pix' ? 'código PIX' : 'link de pagamento'} no número informado.
-                </p>
-                <p className="checkout-thanks">Obrigado, {name}! 💕</p>
-                <button className="checkout-submit-btn" onClick={resetAll}>Fechar</button>
+            <div className="checkout-modal-header">
+              <h3>Finalizar pedido</h3>
+              <button className="checkout-close" onClick={resetCheckout}>✕</button>
+            </div>
+
+            <div className="checkout-summary">
+              <span>{count} {count === 1 ? 'presente' : 'presentes'}</span>
+              <strong>R$ {total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</strong>
+            </div>
+
+            <form className="checkout-form" onSubmit={handleSubmit}>
+              <div className="checkout-field">
+                <label>Seu nome</label>
+                <input
+                  type="text"
+                  placeholder="Ex: João Silva"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value)
+                    if (errors.name) setErrors((p) => ({ ...p, name: undefined }))
+                  }}
+                  className={errors.name ? 'input-error' : ''}
+                />
+                {errors.name && <span className="field-error">{errors.name}</span>}
               </div>
-            ) : (
-              <>
-                <div className="checkout-modal-header">
-                  <h3>Finalizar pedido</h3>
-                  <button className="checkout-close" onClick={() => setShowCheckout(false)}>✕</button>
+
+              <div className="checkout-field">
+                <label>Telefone (WhatsApp)</label>
+                <input
+                  type="tel"
+                  placeholder="(00) 00000-0000"
+                  value={phone}
+                  onChange={(e) => {
+                    setPhone(maskPhone(e.target.value))
+                    if (errors.phone) setErrors((p) => ({ ...p, phone: undefined }))
+                  }}
+                  className={errors.phone ? 'input-error' : ''}
+                />
+                {errors.phone && <span className="field-error">{errors.phone}</span>}
+              </div>
+
+              <div className="checkout-field">
+                <label>Como prefere pagar?</label>
+                <div className="payment-options">
+                  <label className={`payment-option ${payment === 'pix' ? 'selected' : ''}`}>
+                    <input type="radio" name="payment" value="pix" checked={payment === 'pix'} onChange={() => setPayment('pix')} />
+                    <span className="payment-icon">🔑</span>
+                    <span>PIX</span>
+                  </label>
+                  <label className={`payment-option ${payment === 'link' ? 'selected' : ''}`}>
+                    <input type="radio" name="payment" value="link" checked={payment === 'link'} onChange={() => setPayment('link')} />
+                    <span className="payment-icon">💳</span>
+                    <span>Cartão / Boleto</span>
+                  </label>
                 </div>
+              </div>
 
-                <div className="checkout-summary">
-                  <span>{count} {count === 1 ? 'presente' : 'presentes'}</span>
-                  <strong>R$ {total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</strong>
-                </div>
+              {submitError && <p className="submit-error">{submitError}</p>}
 
-                <form className="checkout-form" onSubmit={handleSubmit}>
-                  <div className="checkout-field">
-                    <label>Seu nome</label>
-                    <input
-                      type="text"
-                      placeholder="Ex: João Silva"
-                      value={name}
-                      onChange={(e) => {
-                        setName(e.target.value)
-                        if (errors.name) setErrors((prev) => ({ ...prev, name: undefined }))
-                      }}
-                      className={errors.name ? 'input-error' : ''}
-                    />
-                    {errors.name && <span className="field-error">{errors.name}</span>}
-                  </div>
+              <button type="submit" className="checkout-submit-btn" disabled={submitting}>
+                {submitting ? 'Aguarde...' : 'Ir para o pagamento →'}
+              </button>
 
-                  <div className="checkout-field">
-                    <label>Telefone (WhatsApp)</label>
-                    <input
-                      type="tel"
-                      placeholder="(00) 00000-0000"
-                      value={phone}
-                      onChange={(e) => {
-                        setPhone(maskPhone(e.target.value))
-                        if (errors.phone) setErrors((prev) => ({ ...prev, phone: undefined }))
-                      }}
-                      className={errors.phone ? 'input-error' : ''}
-                    />
-                    {errors.phone && <span className="field-error">{errors.phone}</span>}
-                  </div>
-
-                  <div className="checkout-field">
-                    <label>Como prefere pagar?</label>
-                    <div className="payment-options">
-                      <label className={`payment-option ${payment === 'pix' ? 'selected' : ''}`}>
-                        <input
-                          type="radio"
-                          name="payment"
-                          value="pix"
-                          checked={payment === 'pix'}
-                          onChange={() => setPayment('pix')}
-                        />
-                        <span className="payment-icon">🔑</span>
-                        <span>PIX</span>
-                      </label>
-                      <label className={`payment-option ${payment === 'link' ? 'selected' : ''}`}>
-                        <input
-                          type="radio"
-                          name="payment"
-                          value="link"
-                          checked={payment === 'link'}
-                          onChange={() => setPayment('link')}
-                        />
-                        <span className="payment-icon">🔗</span>
-                        <span>Link de pagamento</span>
-                      </label>
-                    </div>
-                  </div>
-
-                  <button type="submit" className="checkout-submit-btn">
-                    Enviar pedido
-                  </button>
-
-                  <p className="checkout-hint">
-                    Você será redirecionado ao WhatsApp para confirmar. Enviaremos o pagamento em seguida 💕
-                  </p>
-                </form>
-              </>
-            )}
+              <p className="checkout-hint">
+                Você será redirecionado ao Mercado Pago para concluir o pagamento com segurança 🔒
+              </p>
+            </form>
           </div>
         </div>
       )}

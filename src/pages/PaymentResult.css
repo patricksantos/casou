@@ -1,0 +1,124 @@
+.pr-page {
+  min-height: 100vh;
+  background: #f9f9f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.pr-card {
+  background: #fff;
+  border-radius: 18px;
+  max-width: 440px;
+  width: 100%;
+  padding: 48px 40px;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  border: 1px solid #e8ddd0;
+}
+
+.pr-icon {
+  font-size: 56px;
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+.pr-logo {
+  font-size: 13px;
+  letter-spacing: 4px;
+  color: #d4a574;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+.pr-date {
+  font-size: 12px;
+  color: #ccc;
+  letter-spacing: 2px;
+  margin-top: 4px;
+}
+
+.pr-divider {
+  width: 40px;
+  height: 1px;
+  background: #e0d5c8;
+  margin: 20px auto;
+}
+
+.pr-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 14px;
+  line-height: 1.3;
+}
+
+.pr-message {
+  font-size: 15px;
+  color: #888;
+  line-height: 1.7;
+  margin: 0 0 16px;
+}
+
+.pr-id {
+  font-size: 12px;
+  color: #bbb;
+  margin: 0 0 24px;
+  word-break: break-all;
+}
+
+.pr-id strong {
+  color: #999;
+}
+
+.pr-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.pr-btn {
+  display: block;
+  padding: 13px 20px;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.2s, transform 0.15s;
+  letter-spacing: 0.3px;
+}
+
+.pr-btn:active {
+  transform: scale(0.97);
+}
+
+.pr-btn-primary {
+  background: #d4a574;
+  color: #fff;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.pr-btn-primary:hover {
+  opacity: 0.88;
+}
+
+.pr-cards-label {
+  font-size: 12px;
+  color: #bbb;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 4px 0 2px;
+  text-align: left;
+}
+
+.pr-btn-secondary {
+  background: #f5f5f5;
+  color: #666;
+  border: 1px solid #e0e0e0;
+}
+
+.pr-btn-secondary:hover {
+  background: #ececec;
+}

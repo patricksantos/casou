@@ -1,9 +1,11 @@
 .gift-registry-container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 600px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  align-items: center;
+  gap: 28px;
 }
 
 .section-title {
@@ -21,318 +23,71 @@
   text-align: center;
   margin: 0;
   font-weight: 300;
+  line-height: 1.7;
+  max-width: 440px;
 }
 
-.gifts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 30px;
-}
-
-.gift-card {
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
+/* ── Emoji preview ── */
+.gift-registry-preview {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.gift-preview-item {
+  width: 64px;
+  height: 64px;
+  background: #f5f5f5;
   border: 1px solid #e0e0e0;
-}
-
-.gift-card:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  transform: translateY(-4px);
-}
-
-.gift-image {
-  width: 100%;
-  height: 180px;
-  background: linear-gradient(135deg, #f5f5f5 0%, #ececec 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.gift-icon {
-  font-size: 60px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.gift-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #333;
-  padding: 15px 15px 0 15px;
-  margin: 0;
-  text-align: center;
+.gift-preview-icon {
+  font-size: 28px;
+  line-height: 1;
 }
 
-.gift-description {
-  font-size: 13px;
-  color: #999;
-  padding: 8px 15px 0 15px;
-  margin: 0;
-  text-align: center;
-  line-height: 1.4;
-  flex-grow: 1;
-}
-
-.gift-price {
-  font-size: 18px;
-  font-weight: 600;
-  color: #333;
-  padding: 12px 15px 0 15px;
-  margin: 0;
-  text-align: center;
-}
-
-.gift-button {
-  background: #d4a574;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  margin: 15px auto 20px auto;
-  border-radius: 6px;
+.gift-preview-more {
+  width: 64px;
+  height: 64px;
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 14px;
   font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: capitalize;
+  color: #999;
+  letter-spacing: 0.5px;
+}
+
+/* ── CTA button ── */
+.gift-registry-btn {
   display: inline-block;
+  background: #d4a574;
+  color: #fff;
+  text-decoration: none;
+  padding: 18px 56px;
+  border-radius: 8px;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: background 0.2s, transform 0.15s;
 }
 
-.gift-button:hover {
+.gift-registry-btn:hover {
   background: #c9956b;
-  transform: scale(1.02);
 }
 
-.gift-button:active {
+.gift-registry-btn:active {
   transform: scale(0.98);
 }
 
-.gift-card.in-cart {
-  border-color: #c9a96e;
-  box-shadow: 0 2px 12px rgba(201, 169, 110, 0.18);
-}
-
-.gift-button-added {
-  background: #edf7ed !important;
-  color: #2d7a2d !important;
-}
-
-.gift-button-added:hover {
-  background: #fef0f0 !important;
-  color: #c0392b !important;
-}
-
-@media (max-width: 768px) {
-  .gifts-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-  }
-
-  .gift-image {
-    height: 150px;
-  }
-
-  .gift-icon {
-    font-size: 45px;
-  }
-
-  .gift-title {
-    font-size: 14px;
-  }
-
-  .gift-price {
-    font-size: 16px;
-  }
-
-  .gift-card {
-    padding: 18px 12px;
-  }
-}
-
-/* ── Share modal ── */
-.share-modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  padding: 20px;
-}
-
-.share-modal {
-  background: #fff;
-  border-radius: 16px;
-  max-width: 440px;
-  width: 100%;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-  position: relative;
-}
-
-.share-modal-close {
-  position: absolute;
-  top: 14px;
-  right: 16px;
-  background: none;
-  border: none;
-  font-size: 18px;
-  color: #aaa;
-  cursor: pointer;
-  line-height: 1;
-  padding: 4px 8px;
-  border-radius: 50%;
-  transition: background 0.15s, color 0.15s;
-}
-
-.share-modal-close:hover {
-  background: #f5f5f5;
-  color: #555;
-}
-
-.share-modal-gift-preview {
-  background: #faf7f3;
-  border-bottom: 1px solid #ede8e0;
-  padding: 20px 24px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.share-modal-emoji {
-  font-size: 40px;
-  flex-shrink: 0;
-  line-height: 1;
-}
-
-.share-modal-gift-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: #2c2520;
-  margin: 0 0 4px;
-  line-height: 1.35;
-  padding-right: 32px;
-}
-
-.share-modal-gift-price {
-  font-size: 14px;
-  color: #c9a96e;
-  font-weight: 700;
-  margin: 0;
-}
-
-.share-modal-body {
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.share-modal-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: #555;
-}
-
-.share-modal-label span {
-  font-weight: 400;
-  color: #aaa;
-}
-
-.share-modal-input {
-  width: 100%;
-  padding: 10px 14px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 14px;
-  color: #333;
-  outline: none;
-  transition: border-color 0.2s;
-  box-sizing: border-box;
-}
-
-.share-modal-input:focus {
-  border-color: #c9a96e;
-}
-
-.share-modal-url-row {
-  background: #f5f5f5;
-  border-radius: 8px;
-  padding: 10px 14px;
-  overflow: hidden;
-}
-
-.share-modal-url {
-  font-size: 12px;
-  color: #888;
-  word-break: break-all;
-  font-family: monospace;
-}
-
-.share-modal-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.share-btn-copy {
-  flex: 1;
-  background: #2c2520;
-  color: #fff;
-  border: none;
-  padding: 12px 16px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.share-btn-copy:hover {
-  background: #3d342d;
-}
-
-.share-btn-whatsapp {
-  flex: 1;
-  background: #25d366;
-  color: #fff;
-  border: none;
-  padding: 12px 16px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
-
-.share-btn-whatsapp:hover {
-  background: #1fb855;
-}
-
-.share-modal-hint {
-  font-size: 12px;
-  color: #bbb;
-  text-align: center;
-  margin: 0;
-}
-
 @media (max-width: 480px) {
-  .gifts-grid {
-    grid-template-columns: 1fr;
-  }
-
   .section-title {
     font-size: 28px;
   }
@@ -341,12 +96,13 @@
     font-size: 14px;
   }
 
-  /* Garantir botão centralizado e com margem adequada no mobile */
-  .gift-button {
-    display: block;
-    width: calc(100% - 40px);
-    max-width: 360px;
-    margin: 12px auto 20px auto;
-    text-align: center;
+  .gift-preview-item,
+  .gift-preview-more {
+    width: 52px;
+    height: 52px;
+  }
+
+  .gift-preview-icon {
+    font-size: 22px;
   }
 }
