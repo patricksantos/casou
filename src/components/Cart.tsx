@@ -3,15 +3,12 @@ import { useCart } from '../context/CartContext'
 import { gifts } from '../data/gifts'
 import './Cart.css'
 
-type PaymentMethod = 'pix' | 'link'
-
 export default function Cart() {
   const { items, removeItem, clearCart, total, count, cartOpen, openCart, closeCart } = useCart()
 
   const [showCheckout, setShowCheckout] = useState(false)
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
-  const [payment, setPayment] = useState<PaymentMethod>('pix')
   const [errors, setErrors] = useState<{ name?: string; phone?: string }>({})
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
@@ -49,7 +46,7 @@ export default function Cart() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           items: cartGifts.map((g) => ({ id: g.id, title: g.title, price: g.price })),
-          payer: { name, phone, payment },
+          payer: { name, phone },
           origin: window.location.origin,
         }),
       })
@@ -76,7 +73,6 @@ export default function Cart() {
     setShowCheckout(false)
     setName('')
     setPhone('')
-    setPayment('pix')
     setErrors({})
     setSubmitError('')
   }
@@ -184,23 +180,7 @@ export default function Cart() {
                 {errors.phone && <span className="field-error">{errors.phone}</span>}
               </div>
 
-              <div className="checkout-field">
-                <label>Como prefere pagar?</label>
-                <div className="payment-options">
-                  <label className={`payment-option ${payment === 'pix' ? 'selected' : ''}`}>
-                    <input type="radio" name="payment" value="pix" checked={payment === 'pix'} onChange={() => setPayment('pix')} />
-                    <span className="payment-icon">🔑</span>
-                    <span>PIX</span>
-                  </label>
-                  <label className={`payment-option ${payment === 'link' ? 'selected' : ''}`}>
-                    <input type="radio" name="payment" value="link" checked={payment === 'link'} onChange={() => setPayment('link')} />
-                    <span className="payment-icon">💳</span>
-                    <span>Cartão / Boleto</span>
-                  </label>
-                </div>
-              </div>
-
-              {submitError && <p className="submit-error">{submitError}</p>}
+{submitError && <p className="submit-error">{submitError}</p>}
 
               <button type="submit" className="checkout-submit-btn" disabled={submitting}>
                 {submitting ? 'Aguarde...' : 'Ir para o pagamento →'}
