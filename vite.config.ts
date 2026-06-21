@@ -5,6 +5,9 @@ export default defineConfig({
     plugins: [react()],
     assetsInclude: ['**/*.jpeg', '**/*.jpg', '**/*.png'],
     base: '/',
+    server: {
+        historyApiFallback: true,
+    },
     build: {
         outDir: 'dist',
         assetsDir: 'assets',
