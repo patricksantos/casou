@@ -89,7 +89,11 @@ app.post('/api/webhook', async (req, res) => {
 
   try {
     const payment = await new Payment(mp).get({ id: data.id })
-    if (payment.status !== 'approved') return
+    if (!payment || payment.status !== 'approved') return
+    if (!payment.preference_id) {
+      console.warn('⚠️  preference_id ausente no pagamento', data.id)
+      return
+    }
 
     const pref = await new Preference(mp).get({ preferenceId: payment.preference_id })
     const meta = pref.metadata || {}
