@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import express from 'express'
 import path from 'path'
+import fs from 'fs'
 import { fileURLToPath } from 'url'
 import { MercadoPagoConfig, Preference, Payment } from 'mercadopago'
 
@@ -26,6 +27,24 @@ if (!N8N_WEBHOOK_URL) console.warn('⚠️  N8N_WEBHOOK_URL não definida — no
 
 const mp = new MercadoPagoConfig({ accessToken: MP_ACCESS_TOKEN })
 
+// ── Pedidos em arquivo local ─────────────────────────────────
+const ORDERS_FILE = path.join(__dirname, 'orders.json')
+
+function loadOrders() {
+  try { return JSON.parse(fs.readFileSync(ORDERS_FILE, 'utf8')) } catch { return {} }
+}
+
+function saveOrder(ref, data) {
+  const orders = loadOrders()
+  orders[ref] = data
+  fs.writeFileSync(ORDERS_FILE, JSON.stringify(orders, null, 2))
+}
+
+function getOrder(ref) {
+  return loadOrders()[ref] || null
+}
+
+// ────────────────────────────────────────────────────────────
 app.use(express.json())
 app.use(express.static(path.join(__dirname, 'dist')))
 
@@ -33,6 +52,13 @@ app.use(express.static(path.join(__dirname, 'dist')))
 app.post('/api/criar-pagamento', async (req, res) => {
   try {
     const { items, payer, origin } = req.body
+
+    const ref = `order-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`
+    saveOrder(ref, {
+      giftIds: items.map(i => i.id),
+      payerName: payer.name,
+      payerPhone: payer.phone,
+    })
 
     const isLocalhost = origin.includes('localhost') || origin.includes('127.0.0.1')
     const backUrls = {
@@ -45,26 +71,20 @@ app.post('/api/criar-pagamento', async (req, res) => {
     }
 
     const preference = new Preference(mp)
-    const body = {
-      items: items.map((item) => ({
-        id: String(item.id),
-        title: String(item.title),
-        quantity: 1,
-        unit_price: Number(item.price),
-        currency_id: 'BRL',
-      })),
-      payer: {
-        name: payer.name,
+    const result = await preference.create({
+      body: {
+        external_reference: ref,
+        items: items.map((item) => ({
+          id: String(item.id),
+          title: String(item.title),
+          quantity: 1,
+          unit_price: Number(item.price),
+          currency_id: 'BRL',
+        })),
+        payer: { name: payer.name },
+        ...backUrls,
       },
-      metadata: {
-        payer_name: payer.name,
-        payer_phone: payer.phone,
-        gift_ids: items.map((i) => String(i.id)).join(','),
-      },
-      ...backUrls,
-    }
-
-    const result = await preference.create({ body })
+    })
 
     res.json({
       id: result.id,
@@ -82,7 +102,7 @@ app.post('/api/criar-pagamento', async (req, res) => {
 
 // ── Webhook Mercado Pago ─────────────────────────────────────
 app.post('/api/webhook', async (req, res) => {
-  res.sendStatus(200) // responde imediatamente ao MP
+  res.sendStatus(200)
 
   const { type, data } = req.body
   if (type !== 'payment' || !data?.id) return
@@ -90,17 +110,14 @@ app.post('/api/webhook', async (req, res) => {
   try {
     const payment = await new Payment(mp).get({ id: data.id })
     if (!payment || payment.status !== 'approved') return
-    if (!payment.preference_id) {
-      console.warn('⚠️  preference_id ausente no pagamento', data.id)
+
+    const ref = payment.external_reference
+    const order = ref ? getOrder(ref) : null
+
+    if (!order) {
+      console.warn('⚠️  Pedido não encontrado para ref:', ref)
       return
     }
-
-    const pref = await new Preference(mp).get({ preferenceId: payment.preference_id })
-    const meta = pref.metadata || {}
-
-    const giftIds = meta.gift_ids
-      ? meta.gift_ids.split(',').map(Number).filter(Boolean)
-      : []
 
     const payload = {
       payment_id: payment.id,
@@ -108,11 +125,10 @@ app.post('/api/webhook', async (req, res) => {
       amount: payment.transaction_amount,
       date: new Date().toISOString(),
       payer: {
-        name: meta.payer_name || '',
-        phone: meta.payer_phone || '',
+        name: order.payerName,
+        phone: order.payerPhone,
       },
-      gift_ids: giftIds,
-      preference_id: payment.preference_id,
+      gift_ids: order.giftIds,
     }
 
     console.log('✅ Pagamento aprovado:', JSON.stringify(payload, null, 2))
