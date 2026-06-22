@@ -172,7 +172,7 @@ export const gifts: Gift[] = [
     id: 21,
     title: '[TESTE] Presente de teste',
     description: 'Apenas para testes — não usar em produção',
-    price: 1,
+    price: 0.01,
     icon: '🧪',
     category: 'Teste',
   },
