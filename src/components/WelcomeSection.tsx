@@ -17,13 +17,14 @@ export default function WelcomeSection() {
           <h2 className="welcome-title">O Casal</h2>
           <div className="gallery-grid">
             {photos.map((photo, index) => (
-              <img
-                key={index}
-                src={photo}
-                alt={`Foto ${index + 1}`}
-                className="gallery-image"
-                loading="lazy"
-              />
+              <div key={index} className="gallery-item">
+                <img
+                  src={photo}
+                  alt={`Foto ${index + 1}`}
+                  className="gallery-image"
+                  loading="lazy"
+                />
+              </div>
             ))}
           </div>
 

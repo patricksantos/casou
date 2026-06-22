@@ -1,12 +1,10 @@
 .countdown-container {
   width: 100%;
-  max-width: 1000px;
+  max-width: 1200px;
   display: flex;
   flex-direction: column;
   gap: 40px;
   align-items: center;
-  background: #f9f9f9;
-  padding: 30px 30px;
 }
 
 .countdown-box {

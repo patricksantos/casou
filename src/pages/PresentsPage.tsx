@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { CartProvider } from '../context/CartContext'
 import { useCart } from '../context/CartContext'
 import Cart from '../components/Cart'
 import Footer from '../components/Footer'
 import { gifts } from '../data/gifts'
+import giftImages from '../data/giftImages'
 import './PresentsPage.css'
 
 const heroPhoto = new URL('../img/horizontal/DSC_1256.jpeg', import.meta.url).href
@@ -26,14 +27,20 @@ function GiftGrid() {
             className={`pp-card ${inCart ? 'pp-card-active' : ''}`}
             style={{ '--i': index } as React.CSSProperties}
           >
+            {giftImages[gift.id] ? (
+              <div className="pp-card-image">
+                <img src={giftImages[gift.id]} alt={gift.title} loading="lazy" />
+              </div>
+            ) : (
+              <span className="pp-card-emoji">{gift.icon}</span>
+            )}
+
             <div className="pp-card-top">
               <span className="pp-card-num">{String(gift.id).padStart(2, '0')}</span>
               <span className="pp-card-price">
                 R$ {gift.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
               </span>
             </div>
-
-            <span className="pp-card-emoji">{gift.icon}</span>
 
             <h3 className="pp-card-title">{gift.title}</h3>
             <p className="pp-card-desc">{gift.description}</p>
@@ -86,6 +93,20 @@ function CheckoutBar() {
 }
 
 export default function PresentsPage() {
+  const bgRef = useRef<HTMLDivElement>(null)
+  const heroRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (!bgRef.current || !heroRef.current) return
+      const top = heroRef.current.getBoundingClientRect().top
+      bgRef.current.style.transform = `translateY(${top * 0.15}px) scale(1.1)`
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
     <CartProvider>
       <div className="presents-page">
@@ -98,11 +119,14 @@ export default function PresentsPage() {
           <CheckoutBar />
         </div>
 
-        <section className="pp-hero" style={{ backgroundImage: `url(${heroPhoto})` }}>
-          <p className="pp-eyebrow">Patrick & Sabrina · 01 · 08 · 2026</p>
-          <h1 className="pp-title">
-            Lista de<br />Presentes
-          </h1>
+        <section className="pp-hero" ref={heroRef}>
+          <div className="pp-hero-bg" ref={bgRef} style={{ backgroundImage: `url(${heroPhoto})` }} />
+          <div className="pp-hero-content">
+            <p className="pp-eyebrow">Patrick & Sabrina · 01 · 08 · 2026</p>
+            <h1 className="pp-title">
+              Lista de<br />Presentes
+            </h1>
+          </div>
         </section>
 
         <div className="pp-divider" />

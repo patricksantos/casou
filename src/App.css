@@ -21,22 +21,27 @@ main {
 
 .section {
   width: 100%;
-  padding: 60px 20px;
+  padding: 100px 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.section:nth-child(odd) {
   background: #fff;
 }
 
-.section:nth-child(even) {
-  background: #f9f9f9;
+/* Seções com fundo creme quente */
+#welcome,
+#rsvp {
+  background: #faf7f3;
 }
 
 @media (max-width: 768px) {
   .section {
-    padding: 40px 15px;
+    padding: 64px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 48px 20px;
   }
 }

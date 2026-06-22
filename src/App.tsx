@@ -9,6 +9,7 @@ import Navigation from './components/Navigation'
 import Footer from './components/Footer'
 import LoadingScreen from './components/LoadingScreen'
 import Cart from './components/Cart'
+import PhotoStrip from './components/PhotoStrip'
 import { CartProvider } from './context/CartContext'
 import './App.css'
 
@@ -38,6 +39,7 @@ function App() {
           <section id="gifts" className="section">
             <GiftRegistry />
           </section>
+          <PhotoStrip />
           <section id="rsvp" className="section">
             <RSVPSection />
           </section>

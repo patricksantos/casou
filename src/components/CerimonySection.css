@@ -1,11 +1,10 @@
 .ceremony-section {
   width: 100%;
-  padding: 60px 30px;
 }
 
 .ceremony-container {
   width: 100%;
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -58,10 +57,6 @@
 }
 
 @media (max-width: 768px) {
-  .ceremony-section {
-    padding: 40px 20px;
-  }
-
   .ceremony-title {
     font-size: 28px;
   }
@@ -76,10 +71,6 @@
 }
 
 @media (max-width: 480px) {
-  .ceremony-section {
-    padding: 30px 15px;
-  }
-
   .ceremony-title {
     font-size: 24px;
   }

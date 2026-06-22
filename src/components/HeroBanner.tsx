@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './HeroBanner.css'
 
 export default function HeroBanner() {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
+  const containerRef = useRef<HTMLDivElement>(null)
+
   const photos = [
     new URL('../img/horizontal/DSC_0980.jpeg', import.meta.url).href,
     new URL('../img/horizontal/DSC_1256.jpeg', import.meta.url).href,
@@ -15,9 +17,18 @@ export default function HeroBanner() {
     return () => clearInterval(timer)
   }, [])
 
+  useEffect(() => {
+    const onScroll = () => {
+      if (!containerRef.current) return
+      containerRef.current.style.transform = `translateY(${window.scrollY * 0.3}px)`
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
     <div className="hero-banner">
-      <div className="hero-images-container">
+      <div className="hero-images-container" ref={containerRef}>
         {photos.map((photo, index) => (
           <img
             key={index}
