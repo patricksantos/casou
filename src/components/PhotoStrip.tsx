@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import './PhotoStrip.css'
 
-const photo = new URL('../img/horizontal/DSC_1250.jpeg', import.meta.url).href
+const photo = new URL('../img/horizontal/6.jpg', import.meta.url).href
 
 export default function PhotoStrip() {
   const bgRef = useRef<HTMLDivElement>(null)

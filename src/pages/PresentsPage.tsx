@@ -7,7 +7,7 @@ import { gifts } from '../data/gifts'
 import giftImages from '../data/giftImages'
 import './PresentsPage.css'
 
-const heroPhoto = new URL('../img/horizontal/DSC_1256.jpeg', import.meta.url).href
+const heroPhoto = new URL('../img/horizontal/18.jpg', import.meta.url).href
 
 function GiftGrid() {
   const { items, addItem, removeItem } = useCart()

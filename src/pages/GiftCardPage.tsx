@@ -3,7 +3,7 @@ import html2canvas from 'html2canvas'
 import { gifts, type Gift } from '../data/gifts'
 import './GiftCardPage.css'
 
-const couplePhoto = new URL('../img/vertical/DSC_1330.jpeg', import.meta.url).href
+const couplePhoto = new URL('../img/vertical/22.jpg', import.meta.url).href
 
 function resolveGifts(): Gift[] {
   const params = new URLSearchParams(window.location.search)

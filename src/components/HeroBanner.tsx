@@ -6,8 +6,10 @@ export default function HeroBanner() {
   const containerRef = useRef<HTMLDivElement>(null)
 
   const photos = [
-    new URL('../img/horizontal/DSC_0980.jpeg', import.meta.url).href,
-    new URL('../img/horizontal/DSC_1256.jpeg', import.meta.url).href,
+    new URL('../img/horizontal/18.jpg', import.meta.url).href,
+    new URL('../img/horizontal/2.jpeg', import.meta.url).href,
+    new URL('../img/horizontal/6.jpg', import.meta.url).href,
+    new URL('../img/horizontal/3.jpeg', import.meta.url).href,
   ]
 
   useEffect(() => {

@@ -2,12 +2,12 @@ import './WelcomeSection.css'
 
 export default function WelcomeSection() {
   const photos = [
-    new URL('../img/vertical/DSC_0986.jpeg', import.meta.url).href,
-    new URL('../img/vertical/DSC_0998.jpeg', import.meta.url).href,
-    new URL('../img/vertical/DSC_1038.jpeg', import.meta.url).href,
-    new URL('../img/vertical/DSC_1040.jpeg', import.meta.url).href,
-    new URL('../img/vertical/DSC_1324.jpeg', import.meta.url).href,
-    new URL('../img/vertical/DSC_1330.jpeg', import.meta.url).href,
+    new URL('../img/vertical/22.jpg', import.meta.url).href,
+    new URL('../img/vertical/3.jpg', import.meta.url).href,
+    new URL('../img/vertical/9.jpg', import.meta.url).href,
+    new URL('../img/vertical/6.jpg', import.meta.url).href,
+    new URL('../img/vertical/18.jpg', import.meta.url).href,
+    new URL('../img/vertical/1.jpg', import.meta.url).href,
   ]
 
   return (
