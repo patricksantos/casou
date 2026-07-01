@@ -8,7 +8,7 @@ export default function CerimonySection() {
         
         <div className="ceremony-content">
           <p className="ceremony-text">
-            Aguardamos vocês às 18h! Por favor, não se atrasem.
+            Aguardamos vocês às 16h! Por favor, não se atrasem.
           </p>
           <p className="ceremony-text">
             Após a cerimônia guiaremos todos os local da festa, iremos festejar até o amanhecer.
