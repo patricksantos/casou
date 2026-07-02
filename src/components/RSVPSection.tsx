@@ -46,20 +46,22 @@ export default function RSVPSection() {
               <p className="rsvp-card-text">
                 Clique no botão abaixo para abrir o formulário de confirmação de presença.
               </p>
-              <a
-                className="rsvp-button rsvp-button--primary"
-                href={GOOGLE_FORM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Confirmar presença
-              </a>
-              <button
-                className="rsvp-button rsvp-button--secondary"
-                onClick={() => setIsSubmitted(true)}
-              >
-                Já confirmei ✓
-              </button>
+              <div className="rsvp-buttons">
+                <a
+                  className="rsvp-button rsvp-button--primary"
+                  href={GOOGLE_FORM_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Confirmar presença
+                </a>
+                <button
+                  className="rsvp-button rsvp-button--secondary"
+                  onClick={() => setIsSubmitted(true)}
+                >
+                  Já confirmei ✓
+                </button>
+              </div>
             </div>
           </>
         )}
