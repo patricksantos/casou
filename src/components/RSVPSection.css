@@ -50,12 +50,93 @@
   cursor: pointer;
 }
 
-.rsvp-form {
+.rsvp-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  background: #fff;
+  border: 1px solid #e8ddd0;
+  border-radius: 16px;
+  padding: 48px 56px;
+  max-width: 480px;
   width: 100%;
-  max-width: 800px;
-  height: 800px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}
+
+.rsvp-card-monogram {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding-bottom: 24px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #e8ddd0;
+  width: 100%;
+}
+
+.rsvp-monogram-initials {
+  font-size: 22px;
+  font-weight: 300;
+  letter-spacing: 4px;
+  color: #d4a574;
+}
+
+.rsvp-monogram-names {
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  color: #333;
+}
+
+.rsvp-monogram-date {
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: #999;
+}
+
+.rsvp-card-text {
+  font-size: 15px;
+  color: #555;
+  font-weight: 300;
+  line-height: 1.7;
+  text-align: center;
+  margin: 0;
+}
+
+.rsvp-button {
+  display: inline-block;
+  width: 100%;
+  padding: 14px 24px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  text-align: center;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+  text-decoration: none;
   border: none;
-  display: block;
+  font-family: inherit;
+}
+
+.rsvp-button:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.rsvp-button--primary {
+  background: #d4a574;
+  color: #fff;
+}
+
+.rsvp-button--secondary {
+  background: transparent;
+  color: #999;
+  border: 1px solid #ddd;
+  font-size: 13px;
+  padding: 10px 24px;
 }
 
 @media (max-width: 768px) {
@@ -67,12 +148,12 @@
     font-size: 14px;
   }
 
-  .rsvp-form {
-    height: 950px;
+  .rsvp-card {
+    padding: 36px 28px;
   }
 
   .rsvp-section--submitted {
-    min-height: 475px;
+    min-height: 300px;
   }
 }
 
@@ -85,11 +166,7 @@
     font-size: 13px;
   }
 
-  .rsvp-form {
-    height: 1050px;
-  }
-
-  .rsvp-section--submitted {
-    min-height: 525px;
+  .rsvp-card {
+    padding: 28px 20px;
   }
 }
