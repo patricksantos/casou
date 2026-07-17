@@ -9,6 +9,9 @@ import './PresentsPage.css'
 
 const heroPhoto = new URL('../img/horizontal/18.jpg', import.meta.url).href
 
+const isTestPage = window.location.pathname === '/presentes/teste'
+const visibleGifts = isTestPage ? gifts.filter(g => g.isTest) : gifts.filter(g => !g.isTest)
+
 function GiftGrid() {
   const { items, addItem, removeItem } = useCart()
 
@@ -19,7 +22,7 @@ function GiftGrid() {
 
   return (
     <div className="pp-grid">
-      {gifts.map((gift, index) => {
+      {visibleGifts.map((gift, index) => {
         const inCart = items.includes(gift.id)
         return (
           <div

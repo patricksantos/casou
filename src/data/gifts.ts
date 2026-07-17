@@ -5,6 +5,7 @@ export interface Gift {
   price: number
   icon: string
   category: string
+  isTest?: boolean
 }
 
 export const gifts: Gift[] = [
@@ -167,13 +168,14 @@ export const gifts: Gift[] = [
     price: 720,
     icon: '⭐',
     category: 'Premium',
-  }
-  // {
-  //   id: 21,
-  //   title: '[TESTE] Presente de teste',
-  //   description: 'Apenas para testes — não usar em produção',
-  //   price: 0.01,
-  //   icon: '🧪',
-  //   category: 'Teste',
-  // },
+  },
+  {
+    id: 21,
+    title: 'Presente de teste',
+    description: 'Apenas para testes — não usar em produção',
+    price: 0.01,
+    icon: '🧪',
+    category: 'Teste',
+    isTest: true,
+  },
 ]

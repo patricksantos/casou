@@ -10,7 +10,7 @@ const pathname = window.location.pathname
 
 function Root() {
   if (pathname === '/cartao') return <GiftCardPage />
-  if (pathname === '/presentes') return <PresentsPage />
+  if (pathname === '/presentes' || pathname === '/presentes/teste') return <PresentsPage />
   if (pathname.startsWith('/pagamento/')) return <PaymentResult />
   return <App />
 }
