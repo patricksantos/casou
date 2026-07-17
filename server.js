@@ -28,7 +28,9 @@ if (!N8N_WEBHOOK_URL) console.warn('⚠️  N8N_WEBHOOK_URL não definida — no
 const mp = new MercadoPagoConfig({ accessToken: MP_ACCESS_TOKEN })
 
 // ── Pedidos em arquivo local ─────────────────────────────────
-const ORDERS_FILE = path.join(__dirname, 'orders.json')
+const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data')
+if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true })
+const ORDERS_FILE = path.join(DATA_DIR, 'orders.json')
 
 function loadOrders() {
   try { return JSON.parse(fs.readFileSync(ORDERS_FILE, 'utf8')) } catch { return {} }
